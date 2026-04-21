@@ -1,85 +1,85 @@
 # niyien-lens-data
 
-NiYien fork 专用的 lens 数据仓库。承载两类独立发版的数据：
+Canonical data repository for the NiYien fork of Gyroflow. Hosts two independently versioned datasets:
 
-- `camera_db/` — 相机传感器 / 畸变 / 帧读取时间数据库（每个厂商一个 JSON）
-- `lens_presets/` — 镜头预设（anamorphic 压缩比 / 畸变系数等）+ `index.json` 索引
+- `camera_db/` — Camera sensor / distortion / frame-readout database (one JSON per vendor)
+- `lens_presets/` — Lens presets (anamorphic squeeze ratio / distortion coeffs / etc.) plus `index.json`
 
-本仓库与 [NiYien/gyroflow](https://github.com/NiYien/gyroflow) 解耦发版。gyroflow 客户端通过 manifest（`www.niyien.com/api/manifest`）获取最新版本号，下载热更新包并在 `<data_dir>/lens/versions/<N>/` 解压激活；gyroflow 编译期通过 `src/core/build.rs` 从本仓库 Release 下载 `lens_presets.tar.gz` 与 `camera_db.tar.gz` 作为内置快照。
+This repository is decoupled from [NiYien/gyroflow](https://github.com/NiYien/gyroflow). The Gyroflow client fetches version information from its manifest endpoint (`www.niyien.com/api/manifest`), downloads the hot-update bundle, and activates it under `<data_dir>/lens/versions/<N>/`. Gyroflow's `src/core/build.rs` pulls `lens_presets.tar.gz` and `camera_db.tar.gz` from this repo's Releases at compile time as the built-in fallback.
 
-## 目录结构
+## Layout
 
 ```
 niyien-lens-data/
-├── camera_db/             ← 相机数据库 JSON（canonical 源）
+├── camera_db/             ← Camera database JSONs (canonical source)
 │   ├── blackmagic.json
 │   ├── canon.json
-│   ├── ...（12 家厂商）
+│   ├── ...   (12 vendors total)
 │   └── zcam.json
-├── lens_presets/          ← 镜头预设 JSON + index.json
+├── lens_presets/          ← Lens preset JSONs + index
 │   ├── index.json
 │   ├── aivascope_58mm_1_50x.json
-│   └── ...（10 个 anamorphic 预设）
+│   └── ...   (10 anamorphic presets)
 ├── _scripts/
-│   ├── package_data.py    ← 打包脚本，产出 4 份 artifact
-│   └── package_lens.py    ← shim，等价于 package_data.py lens
+│   ├── package_data.py    ← Packaging script, produces 4 artifacts
+│   └── package_lens.py    ← Thin shim, equivalent to package_data.py lens
 ├── .github/workflows/
-│   └── release.yml        ← data-v* tag 触发发版
-├── niyien-lens-data.toml  ← 打包配置
+│   └── release.yml        ← Triggered on data-v* tag push
+├── niyien-lens-data.toml  ← Packaging config
 ├── .gitignore
 └── README.md
 ```
 
-## 打包产物
+## Release artifacts
 
-每次 `data-v*` tag 触发 CI，产出 4 份 artifact：
+Every `data-v*` tag push triggers CI and produces four artifacts:
 
-| 产物 | 用途 |
+| Artifact | Purpose |
 |---|---|
-| `gyroflow-niyien-lens.cbor.gz` | 客户端运行时热更新包（CBOR + gzip） |
-| `gyroflow-niyien-lens.cbor.gz.json` | 元数据（version / sha256 / file_count） |
-| `lens_presets.tar.gz` | gyroflow build.rs 编译期下载 |
-| `camera_db.tar.gz` | gyroflow build.rs 编译期下载 |
+| `gyroflow-niyien-lens.cbor.gz` | Client runtime hot-update bundle (CBOR + gzip) |
+| `gyroflow-niyien-lens.cbor.gz.json` | Metadata (version / sha256 / file_count) |
+| `lens_presets.tar.gz` | Consumed by Gyroflow `build.rs` at compile time |
+| `camera_db.tar.gz` | Consumed by Gyroflow `build.rs` at compile time |
 
-## 发版流程
+## Release workflow
 
-1. **改数据**：在 `camera_db/` 或 `lens_presets/` 修改 / 新增 JSON
-2. **本地验证**（可选）：
+1. **Edit data**: modify or add JSONs under `camera_db/` or `lens_presets/`.
+2. **Local validation** (optional):
    ```bash
    python _scripts/package_lens.py --version 1
    ls _deployment/_binaries/
-   # 期望看到 4 个产物 + JSON 元数据
+   # Expect 4 artifacts + JSON metadata
    ```
-3. **PR / commit**：正常 git 流程
-4. **打 tag**：
+3. **PR / commit**: standard git flow.
+4. **Tag**:
    ```bash
    git tag data-v20260421.1
    git push origin data-v20260421.1
    ```
-5. **CI 自动发布**：Actions 运行 `package_lens.py`、发 GitHub Release、(可选) 同步国内镜像
-6. **通知 Vercel**：从 Release 页面记下 `gyroflow-niyien-lens.cbor.gz.json` 的 `version` / `sha256`，填入 docs 仓库的 Vercel env：
+5. **CI auto-publish**: Actions runs `package_lens.py`, publishes the GitHub Release, and (optionally) mirrors to the domestic CDN.
+6. **Update Vercel env**: note the `version` / `sha256` from the Release's `.cbor.gz.json`, then set the following env vars in the docs repo's Vercel project:
    - `NIYIEN_CONTENT_RELEASE_TAG=data-v20260421.1`
    - `NIYIEN_LENS_VERSION=<version>`
    - `NIYIEN_LENS_SHA256=<sha256>`
 
-客户端下次 `fetch_manifest` 时拿到新版本号，自动下载激活。
+On next startup, clients call `fetch_manifest`, discover the new version, and auto-download.
 
-## gyroflow 编译期锁定 tag
+## Compile-time tag pinning in Gyroflow
 
-gyroflow `src/core/build.rs` 的常量 `NIYIEN_LENS_DATA_DEFAULT_TAG` 固定一个 tag 值（保证编译可重现）；`env NIYIEN_LENS_DATA_TAG` 可覆盖。想让 gyroflow 新版本带上本仓库的最新数据，需要在 gyroflow 发版 PR 中 bump 该常量。
+Gyroflow's `src/core/build.rs` pins a tag via the `NIYIEN_LENS_DATA_DEFAULT_TAG` constant for reproducible builds. The `NIYIEN_LENS_DATA_TAG` environment variable overrides it. To make a Gyroflow release ship with the latest data here, bump that constant in the Gyroflow release PR.
 
-## 镜像 secrets（可选）
+## Mirror secrets (optional)
 
-如需把产物同步到 `download.niyien.com`，在本仓库 GitHub Settings → Secrets 配置：
+To sync artifacts to `download.niyien.com`, configure the following secrets in this repo's GitHub Settings → Secrets:
 
 - `NIYIEN_MIRROR_HOST`
 - `NIYIEN_MIRROR_USER`
-- `NIYIEN_MIRROR_KEY`（SSH 私钥）
+- `NIYIEN_MIRROR_KEY` (SSH private key)
 - `NIYIEN_MIRROR_PATH`
 
-缺失时 workflow 自动跳过 mirror 步骤，GitHub Release 分发不受影响。
+Without them the mirror step is skipped automatically; GitHub Release distribution is unaffected.
 
-## 数据源
+## Data provenance
 
-- `camera_db/` 初始内容来源于 [AdrianEddy/telemetry-parser](https://github.com/AdrianEddy/telemetry-parser) 的同名目录（已于 2026-04-21 迁入）。此后以本仓库为 canonical 源，telemetry-parser 那份降级为独立 crate 的 test fixture。
-- `lens_presets/` 初始内容来源于 gyroflow `resources/anamorphic_presets/`（已于 2026-04-21 迁入并重命名）。未来可容纳非 anamorphic 类预设。
+- `camera_db/` — Initial contents migrated from [AdrianEddy/telemetry-parser](https://github.com/AdrianEddy/telemetry-parser)'s `camera_db/` directory on 2026-04-21. Canonical source now lives here; the telemetry-parser copy is downgraded to a test fixture for that crate.
+- `lens_presets/` — Initial contents migrated from `resources/anamorphic_presets/` in the NiYien Gyroflow fork on 2026-04-21, directory renamed to accommodate future non-anamorphic preset types.
