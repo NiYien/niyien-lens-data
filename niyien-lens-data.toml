@@ -1,0 +1,7 @@
+[data.lens]
+asset_name = "gyroflow-niyien-lens.cbor.gz"
+install_dir = "lens"
+# 打包时扫描的子目录（相对仓库根）
+include_subdirs = ["camera_db", "lens_presets"]
+# 额外 tar.gz 产物（供 gyroflow build.rs 编译期下载）
+extra_tarballs = ["camera_db", "lens_presets"]
