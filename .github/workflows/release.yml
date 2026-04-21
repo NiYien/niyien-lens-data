@@ -4,12 +4,10 @@ on:
   push:
     tags:
       - 'data-v*'
-    paths:
-      - 'camera_db/**'
-      - 'lens_presets/**'
-      - 'niyien-lens-data.toml'
-      - '_scripts/package_*.py'
   workflow_dispatch:
+
+permissions:
+  contents: write
 
 jobs:
   package:
@@ -47,7 +45,9 @@ jobs:
             _deployment/_binaries/camera_db.tar.gz
 
       - name: Prepare mirror bundle
-        if: ${{ secrets.NIYIEN_MIRROR_HOST != '' && secrets.NIYIEN_MIRROR_USER != '' && secrets.NIYIEN_MIRROR_KEY != '' && secrets.NIYIEN_MIRROR_PATH != '' }}
+        env:
+          MIRROR_HOST: ${{ secrets.NIYIEN_MIRROR_HOST }}
+        if: env.MIRROR_HOST != ''
         run: |
           mkdir -p mirror
           cp _deployment/_binaries/gyroflow-niyien-lens.cbor.gz mirror/
@@ -56,7 +56,9 @@ jobs:
           cp _deployment/_binaries/camera_db.tar.gz mirror/
 
       - name: Upload to domestic mirror
-        if: ${{ secrets.NIYIEN_MIRROR_HOST != '' && secrets.NIYIEN_MIRROR_USER != '' && secrets.NIYIEN_MIRROR_KEY != '' && secrets.NIYIEN_MIRROR_PATH != '' }}
+        env:
+          MIRROR_HOST: ${{ secrets.NIYIEN_MIRROR_HOST }}
+        if: env.MIRROR_HOST != ''
         uses: appleboy/scp-action@v0.1.7
         with:
           host: ${{ secrets.NIYIEN_MIRROR_HOST }}
