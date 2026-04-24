@@ -176,7 +176,7 @@
       "M200":           [ null,  null,  null,  null,  null,  null,    32,    32,  null,  -6.8,  15.8,  15.8,  15.8],
       "M5":             [ null,  null,  null,  null,  null,  null,  null,  null,  null,  -6.8, -10.8, -10.8, -10.8],
       "M6":             [ null,  null,  null,  null,  null,  null,  null,  null,  null,  -6.8, -10.8, -10.8, -10.8],
-      "M6 Mark II":     [ null,  null,  null,  null,  null, -15.5,   -30,   -30,  null,  -6.8, -10.8, -10.8, -10.8],
+      "M6 Mark II":     [ null,  null,  null,  null,  null, -15.5,    17,    17,  null,  -6.8, -10.8, -10.8, -10.8],
       "M50 Mark II":    [ null,  null,  null,  null,  null, -15.5,  32.8,  32.8,  null,  -6.8,  13.4,  13.4,  13.4],
       "M50":            [ null,  null,  null,  null,  null, -15.5,  32.8,  32.8,  null,  -6.8,  13.4,  13.4,  13.4],
       "1D X Mark III":  [ null,  null,  null,  null,  null, -15.5,   -30,   -30,  null,  -6.8, -15.8, -15.8, -15.8],
