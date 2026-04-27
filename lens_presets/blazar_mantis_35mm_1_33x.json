@@ -1,0 +1,6 @@
+{
+  "name": "Blazar Mantis 35mm 1.33x",
+  "squeeze_ratio": 1.33,
+  "distortion_coeffs": [0.00, 0.8, -1.1, 0.0], 
+  "distortion_model": "opencv_fisheye"
+}
