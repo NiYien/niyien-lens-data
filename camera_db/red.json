@@ -2,7 +2,8 @@
   "version": 1,
   "aliases": {
     "KOMODO 6K": "KOMODO",
-    "RED RAVEN": "RED RAVEN 4.5K"
+    "RED RAVEN": "RED RAVEN 4.5K",
+    "WEAPON": "WEAPON DRAGON 6K"
   },
 
   "models": {
@@ -15,6 +16,7 @@
     "GEMINI 5K":               { "sw": 30.72 },
     "RED RAVEN 4.5K":          { "sw": 23.0 },
     "DSMC2 DRAGON-X 6K S35":   { "sw": 30.72 },
+    "WEAPON DRAGON 6K":        { "sw": 30.72 },
     "EPIC":                    { "sw": 30.72 }
   },
 
@@ -30,6 +32,7 @@
       "GEMINI 5K":             [null, -15.6, -15.6, -15.6, -7.4, -15.6, -15.6, -15.6, null, -7.4, -15.6, -15.6, -15.6],
       "RED RAVEN 4.5K":        [null, -15.6, -15.6, -15.6, -7.4, -15.6, -15.6, -15.6, null, -7.4, -15.6, -15.6, -15.6],
       "DSMC2 DRAGON-X 6K S35": [null, null, null, null, null, null, null, null, null, null, null, null, null],
+      "WEAPON DRAGON 6K":      [null, -12.3, -12.3, -12.3, -7.4, -12.3, -12.3, -12.3, null, -7.4, -12.3, -12.3, -12.3],
       "EPIC":                  [null, -12.3, -12.3, -12.3, -7.4, -12.3, -12.3, -12.3, null, -7.4, -12.3, -12.3, -12.3]
     }
   }
