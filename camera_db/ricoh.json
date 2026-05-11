@@ -1,5 +1,13 @@
 {
   "version": 1,
+  "aliases": {
+    "_2": "II",
+    "_3": "III",
+    "_4": "IV",
+    "_5": "V",
+    "_6": "VI",
+    "_7": "VII"
+  },
 
   "models": {
     "GR IV":   { "sw": 23.5, "fixed_fl": 28 },

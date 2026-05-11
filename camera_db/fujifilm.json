@@ -1,5 +1,13 @@
 {
   "version": 1,
+  "aliases": {
+    "_2": "II",
+    "_3": "III",
+    "_4": "IV",
+    "_5": "V",
+    "_6": "VI",
+    "_7": "VII"
+  },
 
   "models": {
     "GFX ETERNA 55": { "sw": 43.8 },
