@@ -1,0 +1,6 @@
+{
+  "name": "Blazar Apec 35mm 1.33x",
+  "squeeze_ratio": 1.33,
+  "distortion_coeffs": [-0.2733333333333334, -0.0266666666666666, 0.0, 0.0], 
+  "distortion_model": "poly5"
+}

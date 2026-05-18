@@ -1,6 +1,6 @@
 {
   "name": "Blazar Viper 35mm 1.50x",
   "squeeze_ratio": 1.5,
-  "distortion_coeffs": [0.02, 0.26, -0.25, 0.0],
-  "distortion_model": "opencv_fisheye"
+  "distortion_coeffs": [-0.1633333333333333, 0.0133333333333333, 0.0, 0.0],
+  "distortion_model": "poly5"
 }

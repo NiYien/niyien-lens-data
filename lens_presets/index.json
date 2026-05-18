@@ -2,9 +2,9 @@
   "version": 1,
   "presets": [
     {
-      "id": "sirui_xingchen_50mm_1_33x",
-      "name": "Sirui astra 50mm 1.33x",
-      "file": "sirui_astra_50mm_1_33x.json"
+      "id": "blazar_apec_35mm_1_33x",
+      "name": "Blazar Apec 35mm 1.33x",
+      "file": "blazar_apec_35mm_1_33x.json"
     },
     {
       "id": "blazar_mantis_25mm_1_33x",
@@ -22,14 +22,34 @@
       "file": "blazar_remus_45mm_1_50x.json"
     },
     {
+      "id": "blazar_talon_50mm_1_50x",
+      "name": "Blazar Talon 50mm 1.50x",
+      "file": "blazar_talon_50mm_1_50x.json"
+    },
+    {
       "id": "blazar_viper_35mm_1_50x",
       "name": "Blazar Viper 35mm 1.50x",
       "file": "blazar_viper_35mm_1_50x.json"
     },
     {
+      "id": "blazar_viper_50mm_1_50x",
+      "name": "Blazar Viper 50mm 1.50x",
+      "file": "blazar_viper_50mm_1_50x.json"
+    },
+    {
       "id": "blazar_viper_75mm_1_50x",
       "name": "Blazar Viper 75mm 1.50x",
       "file": "blazar_viper_75mm_1_50x.json"
+    },
+    {
+      "id": "sirui_astra_50mm_1_33x",
+      "name": "Sirui Atar 50mm 1.33x",
+      "file": "sirui_astra_50mm_1_33x.json"
+    },
+    {
+      "id": "sirui_s35_40mm_1_33x",
+      "name": "Sirui S35 40mm 1.33x",
+      "file": "sirui_s35_40mm_1_33x.json"
     }
   ]
 }

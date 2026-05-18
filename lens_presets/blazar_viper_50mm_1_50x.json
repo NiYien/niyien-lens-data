@@ -1,5 +1,5 @@
 {
-  "name": "Blazar Remus 45mm 1.50x",
+  "name": "Blazar Viper 50mm 1.50x",
   "squeeze_ratio": 1.5,
   "distortion_coeffs": [-0.2733333333333334, -0.0266666666666666, 0.0, 0.0],
   "distortion_model": "poly5"
