@@ -1,0 +1,6 @@
+{
+  "name": "Sirui Atar 75mm 1.33x",
+  "squeeze_ratio": 1.33,
+  "distortion_coeffs": [0.0, 0.0, 0.0, 0.0],
+  "distortion_model": "poly5"
+}
