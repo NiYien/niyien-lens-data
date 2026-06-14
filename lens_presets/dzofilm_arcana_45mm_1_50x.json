@@ -1,0 +1,6 @@
+{
+  "name": "DZOFILM Arcana 45mm 1.50x",
+  "squeeze_ratio": 1.5,
+  "distortion_coeffs": [-0.16, 0.0, 0.0, 0.0],
+  "distortion_model": "poly5"
+}
