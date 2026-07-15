@@ -25,6 +25,8 @@
     "R6m2":           "R6 Mark II",
     "R6M2":           "R6 Mark II",
     "R6MK2":          "R6 Mark II",
+    "R6V":            "R6 V",
+    "R6v":            "R6 V",
     "R5m2":           "R5 Mark II",
     "R5M2":           "R5 Mark II",
     "R5MK2":          "R5 Mark II",
@@ -61,6 +63,7 @@
     "R10":            { "sw": 22.3 },
     "R8":             { "sw": 35.9 },
     "R7":             { "sw": 22.3 },
+    "R6 V":           { "sw": 35.9 },
     "R6 Mark III":    { "sw": 35.9 },
     "R6 Mark II":     { "sw": 35.9 },
     "R6":             { "sw": 35.9 },
@@ -124,9 +127,9 @@
     { "m": ["R5","R5 Mark II","R1"], "tag": { "canon_crop": true }, "c": 1.6 },
     { "m": ["R10","R7"], "tag": { "canon_crop": true }, "c": 1.8 },
     { "m": ["R8","R6 Mark II"], "tag": { "canon_crop": true }, "c": 1.6 },
-    { "m": ["R6 Mark III"], "va": "FULL", "w": [3840, 1920], "c": 1.07 },
-    { "m": ["R6 Mark III"], "fps": [121, 999], "c": 1.13 },
-    { "m": ["R6 Mark III"], "tag": { "canon_crop": true }, "c": 1.6 },
+    { "m": ["R6 Mark III","R6 V"], "va": "FULL", "w": [3840, 1920], "c": 1.07 },
+    { "m": ["R6 Mark III","R6 V"], "fps": [121, 999], "c": 1.13 },
+    { "m": ["R6 Mark III","R6 V"], "tag": { "canon_crop": true }, "c": 1.6 },
     { "m": ["R6"], "va": "FULL", "w": [3840], "c": 1.07 },
     { "m": ["R6"], "tag": { "canon_crop": true }, "c": 1.6 },
     { "m": ["V1"], "w": [3840], "fps": [50, 999], "c": 1.5 },
@@ -170,6 +173,7 @@
       "R8":             [ null,  null,  null,  null,  null,  14.5,  16.6,  16.6,  null,   6.2,   6.2,   6.2,   6.2],
       "R7":             [ null,  null,  null,  null,  null,  13.5,    27,    27,  null,   7.1,    12,    12,    12],
       "R6 Mark III":    [ 17.9,  17.9,  17.9,  null,  -7.2,   7.2,   7.2,   7.2,  null,  -7.2,  -7.2,  -7.2,  -7.2],
+      "R6 V":           [-14.3, -17.9, -17.9,  null,  -7.2,  -7.2,  -7.2,  -7.2,  null,  -7.2,  -7.2,  -7.2,  -7.2],
       "R6 Mark II":     [ null,  null,  null,  null,  null,    15,  16.6,  16.6,  null,   6.2,   6.2,   6.2,   6.2],
       "R6":             [ null,  null,  null,  null,  null,  15.5,    30,    30,  null,   6.8,  10.8,  10.8,  10.8],
       "R3":             [ null,  null,  null,  null,  7.44,   9.5,   9.5,   9.5,  null,   2.4,   2.4,   2.4,   2.4],
@@ -220,7 +224,8 @@
       "C50":          ["Fine:14.3", "OpenGate:6960:4640:18"],
       "R1":           ["Fine:8.3"],
       "R5 Mark II":   ["Fine:17.3"],
-      "R6 Mark III":  ["Fine:15", "OpenGate:6912:4608:18"]
+      "R6 Mark III":  ["Fine:15", "OpenGate:6912:4608:18"],
+      "R6 V":         ["Fine:15", "OpenGate:6960:4640:18"]
     }
   },
 
