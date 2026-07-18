@@ -1,0 +1,6 @@
+{
+  "name": "Sirui Full 35mm 1.60x",
+  "squeeze_ratio": 1.60,
+  "distortion_coeffs": [-0.0081232492997197, 0.3081232492997197, 0.0, 0.0],
+  "distortion_model": "poly5"
+}

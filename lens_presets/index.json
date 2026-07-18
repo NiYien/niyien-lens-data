@@ -67,6 +67,11 @@
       "file": "sirui_astra_100mm_1_33x.json"
     },
     {
+      "id": "sirui_full_35mm_1_60x",
+      "name": "Sirui Full 35mm 1.60x",
+      "file": "sirui_full_35mm_1_60x.json"
+    },
+    {
       "id": "sirui_s35_40mm_1_33x",
       "name": "Sirui S35 40mm 1.33x",
       "file": "sirui_s35_40mm_1_33x.json"
