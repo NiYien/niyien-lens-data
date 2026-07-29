@@ -112,6 +112,14 @@
     "4000D":          { "sw": 22.3 }
   },
 
+  "builtin_gyro_offset": {
+    "R5 Mark II":     "one_frame",
+    "C50":            "none",
+    "C80":            "none",
+    "C400":           "none",
+    "R6 Mark III":    "none"
+  },
+
   "crop": [
     { "m": ["C70","C300 Mark III","C300 Mark II","C200","C100","C100 Mark II","C300"], "va": "S35", "w": [3840, 1920], "c": 1.023 },
     { "m": ["C70","C300 Mark III","C300 Mark II","C200","C100","C100 Mark II","C300"], "va": "S35", "w": [4096, 2048], "c": 0.973 },
