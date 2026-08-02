@@ -1,0 +1,6 @@
+{
+  "name": "Great Joy 85mm 1.80x",
+  "squeeze_ratio": 1.8,
+  "distortion_coeffs": [0.0, 0.0, 0.0, 0.0],
+  "distortion_model": "poly5"
+}

@@ -27,6 +27,11 @@
       "file": "blazar_remus_50mm_1_50x.json"
     },
     {
+      "id": "blazar_talon_35mm_1_50x",
+      "name": "Blazar Talon 35mm 1.50x",
+      "file": "blazar_talon_35mm_1_50x.json"
+    },
+    {
       "id": "blazar_talon_50mm_1_50x",
       "name": "Blazar Talon 50mm 1.50x",
       "file": "blazar_talon_50mm_1_50x.json"
@@ -50,6 +55,11 @@
       "id": "dzofilm_arcana_45mm_1_50x",
       "name": "DZOFILM Arcana 45mm 1.50x",
       "file": "dzofilm_arcana_45mm_1_50x.json"
+    },
+    {
+      "id": "great_joy_85mm_1_80x",
+      "name": "Great Joy 85mm 1.80x",
+      "file": "great_joy_85mm_1_80x.json"
     },
     {
       "id": "sirui_astra_50mm_1_33x",
