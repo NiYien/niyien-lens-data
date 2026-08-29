@@ -113,12 +113,7 @@
   },
 
   "builtin_gyro_offset": {
-    "R5 Mark II":     "one_frame",
-    "R50 V":          "frame_compensation",
-    "C50":            "none",
-    "C80":            "none",
-    "C400":           "none",
-    "R6 Mark III":    "none"
+    "R5 Mark II":     "one_frame"
   },
 
   "crop": [
