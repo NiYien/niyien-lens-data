@@ -1,0 +1,12 @@
+{
+  "_source": "https://www.slashcam.de/artikel/Test/iPhone-16-Pro-Max---Sensortest---Rolling-Shutter-und-Dynamik--alles-.html",
+  "_note": "Reference measurements for iPhone 16 Pro Max, Blackmagic Camera, 4K ProRes 422 Apple Log. Negative values retain the existing estimated flag: these are reference values, not a calibration of every recording mode. No 1080p, front-camera, digital-zoom or other-model values are inferred. Rows use the exact device and recorded equivalent lens name; columns use encoded dimensions and sensor FPS (integer or NTSC equivalent).",
+  "readout": {
+    "columns": ["3840x2160@24", "3840x2160@25", "3840x2160@30", "3840x2160@50", "3840x2160@60", "3840x2160@100", "3840x2160@120"],
+    "data": {
+      "iPhone 16 Pro Max 24mm": [-2.4, -2.4, -2.4, -2.4, -2.4, -2.4, -2.4],
+      "iPhone 16 Pro Max 13mm": [-5.8, -5.8, -5.8, -5.8, -5.8, null, null],
+      "iPhone 16 Pro Max 120mm": [-5.5, -5.5, -5.5, -5.5, -5.5, null, null]
+    }
+  }
+}
