@@ -1,16 +1,146 @@
 {
   "version": 1,
 
-  "aliases": { "mark2 ": "2 " },
+  "aliases": { "mark2 ": "2 ", "MARK2 ": "2 ", "Mark2 ": "2 " },
 
   "models": {
-    "MAVO Edge 8K": { "sw": 36 },
-    "MAVO Edge 6K": { "sw": 36 },
-    "MAVO":         { "sw": 24 },
-    "MAVO2 S35":    { "sw": 24 },
-    "MAVO LF":      { "sw": 36 },
-    "MAVO2 LF":     { "sw": 36 },
-    "TERRA 4K":     { "sw": 19.5 }
+    "MAVO Edge 8K": {
+      "sw": 36,
+      "kinefinity": {
+        "sensor_size": [8192,5456],
+        "native_format": "FULL",
+        "oversampling": [
+          {"format":"FULL","output":[4864,3176],"source":[7168,4760]},
+          {"format":"FULL","output":[4224,3176],"source":[6400,4760]},
+          {"format":"FULL","output":[4096,2644],"source":[8192,5288]},
+          {"format":"FULL","output":[4096,2728],"source":[8192,5456]},
+          {"format":"FULL","output":[4096,2160],"source":[8192,4320]},
+          {"format":"FULL","output":[4096,1692],"source":[8192,3384]},
+          {"format":"FULL","output":[3840,3176],"source":[5760,4760]},
+          {"format":"FULL","output":[3840,2160],"source":[7680,4320]},
+          {"format":"FULL","output":[3840,1600],"source":[7680,3200]},
+          {"format":"S35","output":[4096,2560],"source":[6144,3840]},
+          {"format":"S35","output":[4096,2160],"source":[6144,3240]},
+          {"format":"S35","output":[3840,2160],"source":[5760,3240]},
+          {"format":"S35","output":[3840,1600],"source":[5760,2400]},
+          {"format":"S35","output":[3456,2560],"source":[5120,3840]},
+          {"format":"S35","output":[3072,2560],"source":[4864,3840]}
+        ]
+      }
+    },
+    "MAVO Edge 6K": {
+      "sw": 36,
+      "kinefinity": {
+        "sensor_size": [6016,3984],
+        "native_format": "FULL",
+        "sensor_widths": {"1920":11.5,"2048":12.3,"2944":17.6,"3072":18.4,"3328":19.9,"3712":22.2,"3840":23,"4096":24.5,"4608":27.6,"5120":30.6,"5184":31,"5760":34.5,"6016":36},
+        "oversampling": [
+          {"format":"FULL","output":[3840,2460],"source":[5760,3690]},
+          {"format":"FULL","output":[3840,2160],"source":[5760,3240]},
+          {"format":"FULL","output":[3840,1600],"source":[5760,2400]},
+          {"format":"FULL","output":[3456,2460],"source":[5184,3690]},
+          {"format":"FULL","output":[3072,2460],"source":[4608,3690]},
+          {"format":"S35","output":[2048,1080],"source":[4096,2160]},
+          {"format":"S35","output":[2048,860],"source":[4096,1720]},
+          {"format":"S35","output":[1920,1080],"source":[3840,2160]},
+          {"format":"S35","output":[1920,800],"source":[3840,1600]},
+          {"format":"S35","output":[4096,2160],"source":[4096,2160]},
+          {"format":"S35","output":[3840,2160],"source":[3840,2160]}
+        ],
+        "readout": [{"format":"FULL","height":3984,"ms":-20.7},{"format":"S35","height":2160,"ms":-12,"fps":[0,60]}]
+      }
+    },
+    "MAVO": {
+      "sw": 24,
+      "kinefinity": {
+        "sensor_size": [6016,3984],
+        "native_format": "S35",
+        "oversampling": [
+          {"format":"S35","output":[3840,2160],"source":[5760,3240]},
+          {"format":"S35","output":[3840,1600],"source":[5760,2400]},
+          {"format":"S35","output":[2944,1620],"source":[5888,3240]},
+          {"format":"S35","output":[2944,1200],"source":[5888,2400]}
+        ]
+      }
+    },
+    "MAVO2 S35": {
+      "sw": 24,
+      "kinefinity": {
+        "sensor_size": [6144,4016],
+        "native_format": "S35",
+        "oversampling": [
+          {"format":"S35","output":[4096,2160],"source":[6144,3240]},
+          {"format":"S35","output":[4096,1672],"source":[6144,2516]},
+          {"format":"S35","output":[3840,2460],"source":[5760,3840]},
+          {"format":"S35","output":[3840,2160],"source":[5760,3240]},
+          {"format":"S35","output":[3840,1576],"source":[5760,2364]},
+          {"format":"S35","output":[3456,2460],"source":[5120,3840]},
+          {"format":"S35","output":[3072,2460],"source":[4864,3840]}
+        ]
+      }
+    },
+    "MAVO LF": {
+      "sw": 36,
+      "kinefinity": {
+        "sensor_size": [6016,4016],
+        "native_format": "FULL",
+        "oversampling": [
+          {"format":"FULL","output":[3840,2160],"source":[5760,3240]},
+          {"format":"FULL","output":[3840,1600],"source":[5760,2400]},
+          {"format":"FULL","output":[2944,1620],"source":[5888,3240]},
+          {"format":"FULL","output":[2944,1200],"source":[5888,2400]}
+        ],
+        "readout": [{"format":"FULL","height":3172,"ms":-17}]
+      }
+    },
+    "MAVO2 LF": {
+      "sw": 36,
+      "kinefinity": {
+        "sensor_size": [6016,3984],
+        "native_format": "FULL",
+        "sensor_widths": {"1920":11.5,"2048":12.3,"2944":17.6,"3072":18.4,"3328":19.9,"3712":22.2,"3840":23,"4096":24.5,"4608":27.6,"5120":30.6,"5184":31,"5760":34.5,"6016":36},
+        "oversampling": [
+          {"format":"FULL","output":[3840,2460],"source":[5760,3690]},
+          {"format":"FULL","output":[3840,2160],"source":[5760,3240]},
+          {"format":"FULL","output":[3840,1600],"source":[5760,2400]},
+          {"format":"FULL","output":[3456,2460],"source":[5184,3690]},
+          {"format":"FULL","output":[3072,2460],"source":[4608,3690]},
+          {"format":"S35","output":[2048,1080],"source":[4096,2160]},
+          {"format":"S35","output":[2048,860],"source":[4096,1720]},
+          {"format":"S35","output":[1920,1080],"source":[3840,2160]},
+          {"format":"S35","output":[1920,800],"source":[3840,1600]},
+          {"format":"S35","output":[4096,2160],"source":[4096,2160]},
+          {"format":"S35","output":[3840,2160],"source":[3840,2160]}
+        ]
+      }
+    },
+    "TERRA 4K": {
+      "sw": 19.5,
+      "kinefinity": {
+        "sensor_size": [4096,2700],
+        "native_format": "S35",
+        "oversampling": [
+          {"format":"S35","output":[2048,1080],"source":[4096,2160]},
+          {"format":"S35","output":[2048,860],"source":[4096,1720]},
+          {"format":"S35","output":[1920,1080],"source":[3840,2160]},
+          {"format":"S35","output":[1920,800],"source":[3840,1600]}
+        ]
+      }
+    },
+    "VISTA": {
+      "sw": 36,
+      "kinefinity": {
+        "sensor_size": [6016,3984],
+        "native_format": "FULL",
+        "sensor_widths": {"1920":11.5,"2048":12.3,"2944":17.6,"3072":18.4,"3328":19.9,"3712":22.2,"3840":23,"4096":24.5,"4608":27.6,"5120":30.6,"5760":34.5,"6016":36},
+        "oversampling": [
+          {"format":"FULL","output":[3840,2464],"source":[5760,3696]},
+          {"format":"FULL","output":[4096,2160],"source":[6016,3172]},
+          {"format":"FULL","output":[3840,2160],"source":[5760,3240]}
+        ],
+        "readout": [{"height":3984,"ms":-18}]
+      }
+    }
   },
 
   "readout": {
