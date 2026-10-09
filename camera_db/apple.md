@@ -1,6 +1,22 @@
-# iPhone 14–18 metadata and readout coverage
+# iPhone 12–18 metadata and readout coverage
 
-The phone parser recognizes iPhone identity from the recording, without a model whitelist. This table explicitly covers 20 published models and 47 native rear-camera lens labels: iPhone 14/Plus/Pro/Pro Max; 15/Plus/Pro/Pro Max; 16/Plus/Pro/Pro Max/16e; 17/Pro/Pro Max/17e and iPhone Air; 18 Pro/Pro Max. Apple lists the 18 Pro models in its current [model catalogue](https://support.apple.com/en-au/108044). Other iPhone names remain readable through the same parser; an absent row never prevents identity, date or focal metadata from being read.
+The phone parser recognizes iPhone identity from the recording, without a model whitelist. This table explicitly covers 28 models and 67 native rear-camera lens labels: iPhone 12/mini/Pro/Pro Max; 13/mini/Pro/Pro Max; 14/Plus/Pro/Pro Max; 15/Plus/Pro/Pro Max; 16/Plus/Pro/Pro Max/16e; 17/Pro/Pro Max/17e and iPhone Air; 18 Pro/Pro Max. Apple lists the 18 Pro models in its current [model catalogue](https://support.apple.com/en-au/108044). Other iPhone names remain readable through the same parser; an absent row never prevents identity, date or focal metadata from being read.
+
+## iPhone 12 and 13 families
+
+These entries cover native rear-camera labels in 35mm-equivalent millimetres. They do not override focal lengths recorded in a clip.
+
+| Model | Main | Ultra-wide | Telephoto |
+|---|---|---|---|
+| iPhone 12 / 12 mini | 26mm | 13mm | — |
+| iPhone 12 Pro | 26mm | 13mm | 52mm |
+| iPhone 12 Pro Max | 26mm | 13mm | 65mm |
+| iPhone 13 / 13 mini | 26mm | 13mm | — |
+| iPhone 13 Pro / 13 Pro Max | 26mm | 13mm | 77mm |
+
+Sources: Apple's [12 Pro / Pro Max announcement](https://www.apple.com/newsroom/2020/10/apple-introduces-iphone-12-pro-and-iphone-12-pro-max-with-5g/) and [13 Pro / Pro Max announcement](https://www.apple.com/au/newsroom/2021/09/apple-unveils-iphone-13-pro-and-iphone-13-pro-max-more-pro-than-ever-before/); DXOMARK's camera reviews for [12 / 12 mini](https://www.dxomark.com/apple-iphone-12-mini-camera-review-performance-in-your-pocket/), [12 Pro](https://www.dxomark.com/apple-iphone-12-pro-camera-review-great-smartphone-video/), [13 / 13 mini](https://www.dxomark.com/apple-iphone-13-mini-camera-review-powerful-mobile-imaging-in-pocket-format/) and [13 Pro](https://www.dxomark.com/apple-iphone-13-pro-camera-review-outstanding-video/).
+
+All 20 new rows retain null readout times: no reference with a verified matching model, lens, encoded dimensions and recording FPS was established for this addition. The [slashCAM 13 Pro test](https://www.slashcam.de/artikel/Test/Apple-iPhone-13-Pro---Sensor-Qualitaet-in-4K-10-Bit-ProRes-inkl--Dynamik-und-Rolling-Shutter---alles-.html) reports 6.8ms for the main camera and 5ms for ultra-wide and telephoto in its 4K/FiLMiC Pro investigation, but does not specify the recording FPS for those measurements. Keep these as manual references; do not assign them to automatic FPS columns or to 13 Pro Max. A recording's own readout tag still takes priority over this table.
 
 ## Focal length
 
@@ -36,4 +52,4 @@ Sources: [15 Pro](https://www.cined.com/camera-database/?camera=iPhone-15-Pro), 
 
 ## Verification
 
-Parser fixtures cover every listed model/lens under both legacy and modern metadata layouts. They are synthetic metadata fixtures, not recordings from all 20 phones. The two original 16 Pro Max clips remain the real-file regression cases. `PHONE_CAMERA_DB` enables the authoritative-table test; `PHONE_SAMPLE_DIR` enables original-file tests.
+Existing parser fixtures cover the 20 iPhone 14–18 models under both legacy and modern metadata layouts. The eight iPhone 12/13 models add database rows only and use the same parser without a model whitelist; their original recordings have not been validated. These are synthetic metadata fixtures, not recordings from all listed phones. The two original 16 Pro Max clips remain the real-file regression cases. `PHONE_CAMERA_DB` enables the authoritative-table test; `PHONE_SAMPLE_DIR` enables original-file tests.
