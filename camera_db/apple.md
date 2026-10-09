@@ -1,99 +1,102 @@
-# iPhone 12–18 metadata and readout coverage
+# iPhone 12–18 readout fallbacks
 
-Readout audit: **2026-10-09**. The registry contains 28 models and 67 native rear-camera lens labels. **10 models / 24 lens labels have at least one adopted readout estimate**, covering 111 model/lens/mode cells; the other 18 models still have no adopted frame-readout reference. A registry entry alone does not add automatic readout support. Identity, date and recorded equivalent focal length are parsed without a model whitelist.
+Updated **2026-10-09**. All **28 registered models / 67 native rear-camera lens labels** now have readout fallbacks. The table has **28 mode columns / 1,016 populated cells**, with **no entirely empty lens row**. The previous 116 values are retained; 900 additional cells are explicitly requested guesses. This is complete fallback coverage for the modes declared below, not physical calibration of all phones.
 
-## How estimates are used
+## Meaning and precedence
 
-The user explicitly chose to use published measurements with incomplete capture conditions as estimates for common recording modes. This replaces the previous policy of leaving every unspecified frame rate null.
+The user clarified that missing readout speeds must receive usable estimates even when they require guessing. This supersedes the previous restriction against cross-model borrowing. Estimates must remain distinguishable from measurements in their documentation.
 
-- All populated values remain negative in JSON, so the existing parser reports a positive duration with `readout_estimated=true`.
-- A 4K measurement without a specified frame rate is assigned to 3840×2160 at 24/25/30fps only. This is an inference, not three independently measured modes. A measured 25fps reference is also used at 24/30fps within the same model, lens and dimensions.
-- High rates, alternate dimensions and Open Gate are populated only where the table below states their source or inference. There is no general scaling by frame height and no automatic fallback across table columns.
-- No value is transferred to a different phone model, even when specifications look similar. No front-camera or digital-zoom focal label is mapped onto a native rear camera.
-- A valid readout tag in the recording takes priority over this fallback table. These references span recording apps and capture pipelines; a matching table cell is an estimate for Blackmagic Camera footage, not validation of every codec, crop or stabilization setting.
-- `null` means no adopted reference. It never means 0ms or a global shutter. Absence of an entry never prevents identity or focal metadata from being read.
+- Every table value is negative: the parser returns its absolute duration with `readout_estimated=true`. Even a literature-derived entry is a fallback reference, not a guarantee for every codec/crop/stabilization setting.
+- A valid readout tag in the recording takes priority. This change does not override recording metadata or change production parsing code.
+- Lookup remains exact for model, native rear-lens focal label, dimensions and nominal/NTSC-equivalent FPS. No runtime nearest-mode fallback or front-camera/digital-zoom remapping is introduced.
+- Sources below support only the particular measurements or hardware specifications described. Sibling transfers, the generic 7ms/5ms defaults and the high-speed factor are our engineering guesses, not values published by Apple or a lab.
 
-## Adopted references and exact inference scope
+## Covered modes
 
-| Source | Recorded model and lens | Published reference | Assigned database scope |
+| Scope | Dimensions | FPS columns | Rule |
 |---|---|---|---|
-| [S12] | 12 Pro Max, 26mm main | Approximately 5ms in a 4K/FiLMiC Pro test; exact measurement FPS not stated | UHD 24/25/30fps inferred; no 50/60fps or other lenses |
-| [S13] | 13 Pro, 26 / 13 / 77mm | 6.8 / 5 / 5ms in a 4K test; exact measurement FPS not stated | UHD 24/25/30fps inferred |
-| [S14] | 14 Pro, 24 / 13 / 77mm | Approximately 9 / 7 / 6ms; author reports inconsistent individual FiLMiC Pro measurements | Rough estimates at UHD 24/25/30fps; not precision calibration |
-| [B14] | 14, rear wide / 26mm | 1920×1080 BGRA, about 5.5ms at 60/120fps; 5.1µs per output row | 1080p 60/120fps; transfer from the project's capture app is estimated |
-| [C15P], [C15M] | 15 Pro and 15 Pro Max, 24 / 13mm | 5.3 / 4.7ms, UHD ProRes at 25fps | Preserve measured-rate references; add 24/30fps estimates |
-| [C15P], [C15M] | 15 Pro 77mm; 15 Pro Max 120mm | 5ms, UHD ProRes at 25fps | Preserve measured-rate references; add 24/30fps estimates |
-| [OCB] | 15 Pro Max, 1× / 24mm | 30fps video, 1080 image rows; author extrapolates 5.25ms across 780 rows to about 7.3ms across the frame | 1920×1080 at 30fps only; native 16:9 width and transfer to this recording path inferred. Do not copy to UHD |
-| [S16] | 16 Pro Max, 24mm | 2.4ms, explicitly independent of frame rate from 24–120fps | Existing UHD 24/25/30/50/60/100/120fps values retained |
-| [S16] | 16 Pro Max, 13 / 120mm | 5.8 / 5.5ms; exact per-rate measurements not individually listed | Existing UHD 24/25/30/50/60fps estimates retained; 100/120fps unknown |
-| [C17], [C17A] | 17 Pro, 24mm | Article says **below 3ms**; database rounds to 3ms for UHD H.265, 4224×2240 RAW and 4224×3024 RAW, all at 25fps | Use 3ms as a rounded upper-bound estimate, not an exact measured point; 24/30fps inferred at those same dimensions |
-| [C17] | 17 Pro, 13mm | 6ms UHD H.265; 5.6ms 4224×2240 RAW; 7.4ms 4224×3024 RAW, at 25fps | Preserve separate dimensions; add 24/30fps estimates |
-| [C17] | 17 Pro, 100mm | 5.8ms UHD H.265; 5.6ms 4224×2240 RAW; 7.5ms 4224×3024 RAW, at 25fps | Preserve separate dimensions; add 24/30fps estimates |
-| [S17] | 17 Pro Max, 24mm | 2.3ms at 4224×2240 RAW, 24–60fps; 3.1ms at 4224×3024 Open Gate without separate FPS statement | Keep existing 17:9 24/25/30/50/60fps; add Open Gate 24/25/30fps estimates |
-| [S18] | 18 Pro Max, 24mm | 2.3–2.4ms in typical video formats, with 4224×2240 RAW at 24–60fps explicitly described; Open Gate 4224×3024 about 3ms | Use 2.4ms for 17:9 RAW 24/25/30/50/60fps; UHD 24/25/30fps mapping inferred. Open Gate 3ms at 24/25/30fps inferred |
-| [S18] | 18 Pro Max, 13 / 100mm | Approximately 6ms for each module, without individual dimension/FPS details | Infer 4224×2240 RAW at 24/25/30fps from the RAW test context. UHD, Open Gate and high-rate values remain unknown |
+| Every registered rear lens | 3840×2160 | 24 / 25 / 30 / 48 / 50 / 60 | UHD baseline below; retain existing entries |
+| Every registered rear lens | 1920×1080 | 24 / 25 / 30 / 48 / 50 / 60 | Assume the same whole-frame scan as UHD, with the HD exceptions below |
+| Main camera of every registered model | 1920×1080 | 100 / 120 | Explicit HD reference where available; otherwise guessed high-speed baseline below |
+| Main camera of 16 Pro/Max, 17 Pro/Max, 18 Pro/Max | 3840×2160 | 100 / 120 | Retain the main-camera UHD baseline; transfer to an unmeasured rate is a guess |
+| All three rear lenses of 17 Pro/Max and 18 Pro/Max | 4224×2240 and 4224×3024 | 24 / 25 / 30 / 48 / 50 / 60 | Separate RAW baselines below, including explicit guesses |
 
-All 34 previously populated cells are retained. This audit adds 77 cells and five columns: Open Gate 24/30fps, and 1080p 30/60/120fps. A new column does not claim that every phone supports that recording format.
+These columns describe the database fallback envelope. Actual mode availability still depends on camera, app, codec and firmware; this table does not enable a recording mode. Remaining null cells are outside that envelope (for example older-phone RAW and non-main-camera UHD120), not unfilled normal-mode lens rows. 720p, front cameras, digital zoom and rates not listed above are outside this change.
 
-## Status of every registered model
+## UHD baselines for every model and lens
 
-All focal labels below are 35mm-equivalent millimetres. “No adopted reference” means the model was searched during this audit and no sufficiently attributable frame duration was found; it does not assert that no measurement exists anywhere.
+Numbers are **milliseconds**, and lens labels are 35mm-equivalent focal lengths. `Reference` identifies a published measurement for that model; extension to other rates still may be guessed. `Sibling/family` and `generic` are explicitly unmeasured fallbacks.
 
-| Model | Rear lens labels | Readout result and remaining gaps |
-|---|---|---|
-| iPhone 12 | 26 / 13 | No adopted reference. Row-time papers found; capture dimensions/lens mapping are incomplete (see below) |
-| iPhone 12 mini | 26 / 13 | No adopted reference for either lens |
-| iPhone 12 Pro | 26 / 13 / 52 | No adopted reference. Side Eye supplies a rear-camera row frequency, not an attributable full-frame preset |
-| iPhone 12 Pro Max | 26 / 13 / 65 | Main UHD common-rate estimate [S12]; ultra-wide, telephoto and other modes unknown |
-| iPhone 13 | 26 / 13 | No adopted reference for either lens |
-| iPhone 13 mini | 26 / 13 | No adopted reference for either lens |
-| iPhone 13 Pro | 26 / 13 / 77 | All three lenses have UHD common-rate estimates [S13]; other modes unknown |
-| iPhone 13 Pro Max | 26 / 13 / 77 | No adopted reference; do not copy 13 Pro or the OCB paper's 15 Pro Max measurements |
-| iPhone 14 | 26 / 13 | Main 1080p 60/120fps estimate [B14]; ultra-wide and UHD unknown |
-| iPhone 14 Plus | 26 / 13 | No adopted reference for either lens |
-| iPhone 14 Pro | 24 / 13 / 77 | All three lenses have rough UHD common-rate estimates [S14]; other modes unknown |
-| iPhone 14 Pro Max | 24 / 13 / 77 | No adopted reference; no transfer from 14 Pro |
-| iPhone 15 | 26 / 13 | No adopted reference for either lens |
-| iPhone 15 Plus | 26 / 13 | No adopted reference for either lens |
-| iPhone 15 Pro | 24 / 13 / 77 | All three lenses have UHD 24/25/30fps estimates [C15P]; 50/60fps and 1080p unknown |
-| iPhone 15 Pro Max | 24 / 13 / 120 | All three lenses have UHD 24/25/30fps estimates [C15M]; main 1080p30 has a separate 7.3ms estimate [OCB] |
-| iPhone 16 | 26 / 13 | No adopted reference for either lens |
-| iPhone 16 Plus | 26 / 13 | No adopted reference for either lens |
-| iPhone 16 Pro | 24 / 13 / 120 | No separately attributable reference found; no transfer from 16 Pro Max |
-| iPhone 16 Pro Max | 24 / 13 / 120 | Existing UHD estimates verified [S16]; 1080p not assigned from a row-time-only paper |
-| iPhone 16e | 26 | No adopted reference |
-| iPhone 17 | 26 / 13 | No adopted reference for either lens |
-| iPhone 17 Pro | 24 / 13 / 100 | All three lenses now have separate UHD, RAW 17:9 and Open Gate 24/25/30fps estimates [C17]; other rates unknown |
-| iPhone 17 Pro Max | 24 / 13 / 100 | Main RAW 17:9 and Open Gate estimates [S17]; ultra-wide, telephoto and UHD unknown |
-| iPhone 17e | 26 | No adopted reference |
-| iPhone Air | 26 | No adopted reference |
-| iPhone 18 Pro | 24 / 13 / 100 | No separately attributable reference found; no transfer from 18 Pro Max |
-| iPhone 18 Pro Max | 24 / 13 / 100 | Main UHD/RAW/Open Gate and other lenses' RAW common-rate estimates [S18]; unlisted modes unknown |
+| Model | Main | Ultra-wide | Telephoto | Basis of the baseline |
+|---|---|---|---|---|
+| iPhone 12 | 26mm: 6.6 | 13mm: 5 | — | Main: assume 1080 output rows for the paper's 164.4kHz row frequency, round 6.57ms to 6.6ms, then assume unchanged whole-frame UHD scan. Ultra-wide: 13 Pro family reference. Both are guesses |
+| iPhone 12 mini | 26mm: 6.6 | 13mm: 5 | — | Borrow the iPhone 12 guesses |
+| iPhone 12 Pro | 26mm: 6.8 | 13mm: 5 | 52mm: 5 | Main: assume 1080 rows for Side Eye's 160kHz rear-camera row frequency, round 6.75ms to 6.8ms and assume main/UHD mapping. Other lenses: 13 Pro family reference. Guessed mapping |
+| iPhone 12 Pro Max | 26mm: 5 | 13mm: 5 | 65mm: 5 | Main: reference [S12]. Other lenses: 13 Pro family reference, guessed |
+| iPhone 13 | 26mm: 5 | 13mm: 5 | — | Main: older 12 Pro Max reference; ultra-wide: 13 Pro reference. Family guesses, no claim of identical scan timing |
+| iPhone 13 mini | 26mm: 5 | 13mm: 5 | — | Borrow the iPhone 13 guesses |
+| iPhone 13 Pro | 26mm: 6.8 | 13mm: 5 | 77mm: 5 | Reference [S13] |
+| iPhone 13 Pro Max | 26mm: 6.8 | 13mm: 5 | 77mm: 5 | Sibling transfer from 13 Pro |
+| iPhone 14 | 26mm: 6.8 | 13mm: 5 | — | UHD main: 13 Pro family reference; ultra-wide: older 12MP ultra-wide reference. Guesses. Use separate observed HD main value below |
+| iPhone 14 Plus | 26mm: 6.8 | 13mm: 5 | — | Sibling transfer from 14, including its separate HD main reference |
+| iPhone 14 Pro | 24mm: 9 | 13mm: 7 | 77mm: 6 | Rough reference [S14], which reports inconsistent individual measurements |
+| iPhone 14 Pro Max | 24mm: 9 | 13mm: 7 | 77mm: 6 | Sibling transfer from 14 Pro |
+| iPhone 15 | 26mm: 7 | 13mm: 5 | — | Generic non-Pro 48MP main / older 12MP ultra-wide starting values; unmeasured |
+| iPhone 15 Plus | 26mm: 7 | 13mm: 5 | — | Borrow the iPhone 15 guesses |
+| iPhone 15 Pro | 24mm: 5.3 | 13mm: 4.7 | 77mm: 5 | UHD25 references [C15P]; other rates transferred |
+| iPhone 15 Pro Max | 24mm: 5.3 | 13mm: 4.7 | 120mm: 5 | UHD25 references [C15M]; other rates transferred. Separate HD main values below |
+| iPhone 16 | 26mm: 7 | 13mm: 5 | — | Same generic non-Pro main / 12MP ultra-wide defaults as 15, not a sensor identity claim |
+| iPhone 16 Plus | 26mm: 7 | 13mm: 5 | — | Borrow the iPhone 16 guesses |
+| iPhone 16 Pro | 24mm: 2.4 | 13mm: 5.8 | 120mm: 5.5 | Sibling transfer from 16 Pro Max |
+| iPhone 16 Pro Max | 24mm: 2.4 | 13mm: 5.8 | 120mm: 5.5 | Reference [S16]: main 24–120fps; other lenses 24–60fps, including 48fps |
+| iPhone 16e | 26mm: 7 | — | — | Generic non-Pro 48MP main starting value, unmeasured |
+| iPhone 17 | 26mm: 7 | 13mm: 6 | — | Main: generic non-Pro default. 48MP ultra-wide: same-generation 17 Pro reference, guessed transfer |
+| iPhone 17 Pro | 24mm: 3 | 13mm: 6 | 100mm: 5.8 | UHD25 references [C17]. Main is a rounded upper-bound estimate: article says below 3ms [C17A] |
+| iPhone 17 Pro Max | 24mm: 2.3 | 13mm: 6 | 100mm: 5.8 | Main: transfer its own 17:9 RAW duration [S17] to UHD. Other lenses: sibling 17 Pro values. Guesses |
+| iPhone 17e | 26mm: 7 | — | — | Generic non-Pro 48MP main starting value, unmeasured |
+| iPhone Air | 26mm: 7 | — | — | Generic non-Pro 48MP main starting value, unmeasured |
+| iPhone 18 Pro | 24mm: 2.4 | 13mm: 6 | 100mm: 6 | Sibling transfer from 18 Pro Max; mode mapping is guessed |
+| iPhone 18 Pro Max | 24mm: 2.4 | 13mm: 6 | 100mm: 6 | Reference [S18], main 2.3–2.4ms rounded to upper end; other modules about 6ms. UHD mapping and unreported rates are guessed |
 
-## Investigated references not used as automatic frame durations
+The **generic 7ms main** value is a deliberately rounded starting point near the middle of the observed 5.3–9ms range of older 48MP Pro main cameras. It is not a sensor-speed prediction derived from megapixels. The **generic 5ms ultra-wide** value uses the approximate older ultra-wide reference range (4.7–5ms). These defaults have the weakest evidence and should be replaced by original-file metadata or actual measurements when available. Apple's [15](https://support.apple.com/en-us/111831), [16](https://www.apple.com/iphone-16/specs/) and [17](https://www.apple.com/iphone-17/specs/) specifications identify the camera classes, not these durations.
 
-- **iPhone 12:** Dong et al., [Readout Time Measurement in Optical Camera Communication using Commercial LED Light Source](https://doi.org/10.1109/ICECE54449.2021.9674666), Table II, gives `1/164400 s` per row at 30fps. Encoded frame dimensions and a native lens label are not established. This is not a 0.006ms frame duration. [PLOS One's smartphone luminescence paper](https://doi.org/10.1371/journal.pone.0293740) uses the 26mm camera for still images, not a matching video preset.
-- **iPhone 12 Pro:** [Side Eye](https://yanlong.site/files/oakland23-sideeye.pdf), Table IX, gives a 160kHz rear-camera row frequency at 60fps. Its illustrative 1080-row image size is insufficient to establish this specific model/lens/format combination. No guessed full-frame duration is inserted.
-- **iPhone 13 Pro Max:** [Video-Based Cryptanalysis](https://eprint.iacr.org/2023/923) describes 1080p120 and a `1/61400` timing parameter but does not establish a native lens label and usable whole-frame duration for this table. In [OCB], this phone is Smartphone-B; the 7.3ms scan result belongs to Smartphone-A, the **15 Pro Max**. The paper's 3.04ms figure is an exposure estimate, not scan time.
-- **iPhone 14 Pro:** [USB-NeRF](https://moyangli00.github.io/usb_nerf/docs/USB_NeRF.pdf) gives a 3.70µs scanline interval at 30Hz, without a sufficiently established native lens/encoded-height mapping here. It is not substituted for the independent rough 4K reference [S14].
-- **iPhone 15 Pro Max slow motion:** [OCB] reports approximately 4.5ms while also describing 120/240fps switching and dropped frames. It is not assigned to a high-rate column; 4.5ms even exceeds a 240fps frame period.
-- **iPhone 16 Pro Max:** [RollingEvidence](https://www.usenix.org/system/files/usenixsecurity25-qian.pdf), section 4, mentions about 1.7µs per row for the main camera; the mode/FPS linkage is incomplete. Do not write 0.0017ms as a frame duration or silently multiply by an arbitrary output height.
-- **15 Pro / Pro Max front camera:** CineD lists 9.3ms at UHD25. The current phone parser deliberately excludes known front-camera labels from this rear-camera lookup. Supporting that measurement requires a separate lens identity path; do not disguise it as a rear-camera row.
-- Hardware specifications, display PWM/response times, app preview latency, maximum FPS, and unattributed reposts are not substitutes for sensor frame-readout measurements. References for Pro/Pro Max are not reused for standard/Plus/mini/e/Air models.
+## HD and high-speed guesses
 
-## Focal length and parser scope
+- For normal-rate HD, transfer the full-frame UHD baseline without halving it merely because the output height halves. This assumes downsampling of the same scan; it is unmeasured for most phones.
+- **14 main:** [B14] measures 1920×1080 BGRA at about 5.5ms (5.1µs/row) for 60/120fps. Keep those entries and use 5.5ms for its other HD rates; borrow this HD baseline for 14 Plus.
+- **15 Pro Max main:** [OCB] reports approximately 7.3ms at 30fps over 1080 image rows. Use 7.3ms for normal-rate HD, assuming native 16:9 dimensions and rate transfer. For HD100/120 use **4.5ms as a rough guess** from its mixed 120/240fps slow-motion experiment. The paper reports switching and dropped frames, so this is not validated high-rate calibration. Do not apply 4.5ms at 240fps: it exceeds that frame period.
+- **Other main cameras at HD100/120:** choose `round(UHD_baseline × 0.8, 1)` milliseconds. **0.8 is a heuristic chosen here**, not a published universal binning factor. It supplies a concrete high-speed starting value with all assigned durations below the frame interval. No high-speed secondary-camera default is asserted.
+- Existing populated values always win over these rules. In particular, the 14 main retains 5.5ms at HD120 and the 16 Pro Max main retains 2.4ms at UHD100/120.
 
-Blackmagic Camera's legacy model/lens suffix is 35mm equivalent. Prefer Apple's explicit `com.apple.quicktime.camera.focal_length.35mm_equivalent`, including track-level values such as `50.00mm`. Preserve `com.apple.quicktime.camera.lens_model` as a description; its physical millimetres must not become equivalent focal length. See [Apple's metadata definition](https://developer.apple.com/documentation/avfoundation/avmetadataidentifier/quicktimemetadatacamerafocallength35mmequivalent).
+## RAW baselines and Open Gate guesses
 
-The encoded-width / 36 conversion remains an estimated projection, without fabricated sensor width. Missing focal metadata still permits manual equivalent-millimetre entry. New database rows do not broaden the existing Blackmagic Camera detection path to every iOS camera app or add RAW codec decoding.
+Each pair below is **4224×2240 / 4224×3024**, in milliseconds. Apply at 24/25/30/48/50/60fps in the declared envelope; rate transfers beyond the source's specific measurements are guesses.
 
-The 12/13 lens labels remain sourced from Apple's [12 Pro / Pro Max announcement](https://www.apple.com/newsroom/2020/10/apple-introduces-iphone-12-pro-and-iphone-12-pro-max-with-5g/) and [13 Pro / Pro Max announcement](https://www.apple.com/au/newsroom/2021/09/apple-unveils-iphone-13-pro-and-iphone-13-pro-max-more-pro-than-ever-before/), and DXOMARK's [12 mini](https://www.dxomark.com/apple-iphone-12-mini-camera-review-performance-in-your-pocket/), [12 Pro](https://www.dxomark.com/apple-iphone-12-pro-camera-review-great-smartphone-video/), [13 mini](https://www.dxomark.com/apple-iphone-13-mini-camera-review-powerful-mobile-imaging-in-pocket-format/) and [13 Pro](https://www.dxomark.com/apple-iphone-13-pro-camera-review-outstanding-video/) camera reviews. This audit does not change any existing focal label.
+| Model | 24mm main | 13mm ultra-wide | 100mm telephoto | Basis |
+|---|---|---|---|---|
+| 17 Pro | 3 / 3 | 5.6 / 7.4 | 5.6 / 7.5 | [C17] at 25fps; main is rounded upper bound [C17A] |
+| 17 Pro Max | 2.3 / 3.1 | 5.6 / 7.4 | 5.6 / 7.5 | Main [S17]; other lenses borrowed from 17 Pro |
+| 18 Pro | 2.4 / 3 | 6 / 8.1 | 6 / 8.1 | Borrowed from 18 Pro Max, including its Open Gate guesses |
+| 18 Pro Max | 2.4 / 3 | 6 / 8.1 | 6 / 8.1 | Main and other modules [S18]; 17:9 mapping for secondary cameras is inferred. Secondary Open Gate is guessed as `6 × 3024 / 2240 = 8.1ms`, assuming unchanged line time |
 
-## Verification
+The Open Gate height ratio is used only for these explicitly documented secondary-camera guesses. It is not added as a general parser scaling rule. This database does not implement RAW decoding or broaden the Blackmagic Camera detection path to other iOS camera apps.
 
-JSON validation checks all 67 rows against all 18 columns, retains all 34 prior numeric cells, and confirms that every added number uses the estimated convention. Parser metadata fixtures cover 28 models / 67 lens labels in both legacy and modern layouts (134 combinations). The authoritative-table regression checks adopted estimates and modes deliberately left unknown. `PHONE_CAMERA_DB` enables that regression; `PHONE_SAMPLE_DIR` enables the two existing 16 Pro Max original-file cases.
+## Source limits and identity checks
 
-These checks validate data loading, matching and metadata handling. They are not recordings or optical/rolling-shutter validation from all 28 phones. This audit does not deploy a lens-data release or update an installed user's database.
+- [S12] reports roughly 5ms for 12 Pro Max main in a 4K/FiLMiC Pro test without a separate exact FPS statement. [S13] reports 6.8/5/5ms for 13 Pro. [S14] reports about 9/7/6ms for 14 Pro and warns of inconsistent measurements.
+- [C15P]/[C15M] are UHD ProRes at 25fps. Their front-camera 9.3ms measurement is not mapped onto any rear camera. [S16] explicitly spans 24–120fps for main and 24–60fps for ultra-wide/telephoto.
+- [C17] provides separate UHD/17:9/Open Gate measurements at 25fps. [S17] provides main RAW 2.3ms at 24–60fps and Open Gate 3.1ms. [S18] reports main 2.3–2.4ms / Open Gate about 3ms, with secondary modules about 6ms.
+- [Row12] gives `1/164400 s` **per row**, at 30fps, without sufficient dimensions/lens mapping. [SideEye] gives 160kHz rear-camera row frequency for 12 Pro at 60fps. The 1080-row/main-camera assumptions in our baseline table are now authorized guesses, not recovered recording metadata.
+- [OCB]'s scan measurements belong to Smartphone-A (**15 Pro Max**). Smartphone-B is 13 Pro Max. Its 3.04ms figure is an exposure estimate. Do not misattribute either to 13 Pro Max readout.
+- [USB-NeRF] mentions 3.70µs scanline timing for 14 Pro; [RollingEvidence] mentions about 1.7µs/row for 16 Pro Max main. Neither is silently inserted as a whole-frame duration. Display response, exposure time, preview latency and maximum frame rate are different quantities.
+
+Focal labels and the parser's equivalent-millimetre convention remain unchanged. Prefer `com.apple.quicktime.camera.focal_length.35mm_equivalent`; physical millimetres in `camera.lens_model` remain descriptive. Encoded width / 36 is an estimated projection, not a fabricated sensor width. Missing focal metadata still permits manual equivalent-millimetre entry. No additional phone model, front-camera label or digital-zoom lens is introduced by this completion.
+
+## Verification and deployment
+
+Structural validation checks all 67 lens rows and the declared mode envelope, preserves all previous 116 numeric cells, requires finite negative values, and confirms every duration is shorter than its assigned frame interval. The authoritative-table regression requires every lens's UHD/HD common-rate lookup and each main camera's HD100/120 fallback to succeed with the estimated flag, while checking excluded modes and known reference values. The existing metadata fixtures cover 28 models / 67 lens labels under both layouts (134 combinations).
+
+Tests verify data loading, matching and estimation flags. The guessed values have not been validated against recordings from all phones or final stabilized footage. `PHONE_CAMERA_DB` enables the authoritative-table regression; `PHONE_SAMPLE_DIR` enables the two existing 16 Pro Max original-file cases. A lens-data release is still required to update installed users; this change alone does not publish or deploy it.
 
 [S12]: https://www.slashcam.de/artikel/Test/Apple-iPhone-12-Pro-Max---Qualitaet-der-10bit-4K-Videofunktion-inkl--Dynamik-und-Rolling-Shutter---alles-.html
 [S13]: https://www.slashcam.de/artikel/Test/Apple-iPhone-13-Pro---Sensor-Qualitaet-in-4K-10-Bit-ProRes-inkl--Dynamik-und-Rolling-Shutter---alles-.html
@@ -107,3 +110,7 @@ These checks validate data loading, matching and metadata handling. They are not
 [C17A]: https://www.cined.com/lab-test-of-the-iphone-17-pro-rolling-shutter-dynamic-range-trials-and-exposure-challenges/
 [S17]: https://www.slashcam.de/artikel/Test/iPhone-17-Pro-Max-mit-ProRes-RAW---Rolling-Shutter-und-Dynamik-Sensortest--alles-.html
 [S18]: https://www.slashcam.de/artikel/Test/iPhone-18-Pro-Max-mit-ProRes-RAW---Rolling-Shutter-und-Dynamik-Sensortest.html
+[Row12]: https://doi.org/10.1109/ICECE54449.2021.9674666
+[SideEye]: https://yanlong.site/files/oakland23-sideeye.pdf
+[USB-NeRF]: https://moyangli00.github.io/usb_nerf/docs/USB_NeRF.pdf
+[RollingEvidence]: https://www.usenix.org/system/files/usenixsecurity25-qian.pdf
