@@ -17,6 +17,11 @@
       "file": "blazar_mantis_35mm_1_33x.json"
     },
     {
+      "id": "blazar_mantis_50mm_1_33x",
+      "name": "Blazar Mantis 50mm 1.33x",
+      "file": "blazar_mantis_50mm_1_33x.json"
+    },
+    {
       "id": "blazar_mantis_75mm_1_33x",
       "name": "Blazar Mantis 75mm 1.33x",
       "file": "blazar_mantis_75mm_1_33x.json"
