@@ -227,7 +227,7 @@
     "additional": {
       "C50":          ["Fine:14.3", "OpenGate:6960:4640:18"],
       "R1":           ["Fine:8.3"],
-      "R5 Mark II":   ["Fine:17.3"],
+      "R5 Mark II":   ["Fine:17.3", "SRAW24:-17.3", "SRAW25:-17.3", "SRAW30:-17.3", "SRAW50:-12.8", "SRAW60:-12.8"],
       "R6 Mark III":  ["Fine:15", "OpenGate:6912:4608:18"],
       "R6 V":         ["Fine:15", "OpenGate:6960:4640:18"]
     }
