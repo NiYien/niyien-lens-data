@@ -35,6 +35,10 @@
         "native_format": "FULL",
         "sensor_widths": {"1920":11.5,"2048":12.3,"2944":17.6,"3072":18.4,"3328":19.9,"3712":22.2,"3840":23,"4096":24.5,"4608":27.6,"5120":30.6,"5184":31,"5760":34.5,"6016":36},
         "oversampling": [
+          {"format":"FULL","output":[3840,2672],"source":[5760,3984]},
+          {"format":"FULL","output":[2944,2000],"source":[5888,3984]},
+          {"format":"FULL","output":[2944,1620],"source":[5888,3240]},
+          {"format":"FULL","output":[2944,1200],"source":[5888,2400]},
           {"format":"FULL","output":[3840,2460],"source":[5760,3690]},
           {"format":"FULL","output":[3840,2160],"source":[5760,3240]},
           {"format":"FULL","output":[3840,1600],"source":[5760,2400]},
@@ -56,6 +60,8 @@
         "sensor_size": [6016,3984],
         "native_format": "S35",
         "oversampling": [
+          {"format":"S35","output":[3840,2672],"source":[5760,3984]},
+          {"format":"S35","output":[2944,2000],"source":[5888,3984]},
           {"format":"S35","output":[3840,2160],"source":[5760,3240]},
           {"format":"S35","output":[3840,1600],"source":[5760,2400]},
           {"format":"S35","output":[2944,1620],"source":[5888,3240]},
@@ -69,6 +75,10 @@
         "sensor_size": [6144,4016],
         "native_format": "S35",
         "oversampling": [
+          {"format":"M43","output":[2048,1080],"source":[4096,2160]},
+          {"format":"M43","output":[2048,832],"source":[4096,1672]},
+          {"format":"M43","output":[1920,1080],"source":[3840,2160]},
+          {"format":"M43","output":[1920,784],"source":[3840,1576]},
           {"format":"S35","output":[4096,2160],"source":[6144,3240]},
           {"format":"S35","output":[4096,1672],"source":[6144,2516]},
           {"format":"S35","output":[3840,2460],"source":[5760,3840]},
@@ -85,12 +95,19 @@
         "sensor_size": [6016,4016],
         "native_format": "FULL",
         "oversampling": [
+          {"format":"FULL","output":[3840,2672],"source":[5760,3984]},
+          {"format":"FULL","output":[2944,2000],"source":[5888,3984]},
           {"format":"FULL","output":[3840,2160],"source":[5760,3240]},
           {"format":"FULL","output":[3840,1600],"source":[5760,2400]},
           {"format":"FULL","output":[2944,1620],"source":[5888,3240]},
           {"format":"FULL","output":[2944,1200],"source":[5888,2400]}
         ],
-        "readout": [{"format":"FULL","height":3172,"ms":-17}]
+        "readout": [
+          {"format":"FULL","height":3984,"ms":-20},
+          {"format":"S35","height":3984,"ms":-20,"fps":[0,60]},
+          {"format":"M43","height":3984,"ms":-20,"fps":[0,60]},
+          {"format":"S16","height":3984,"ms":-20,"fps":[0,60]}
+        ]
       }
     },
     "MAVO2 LF": {
