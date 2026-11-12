@@ -1,5 +1,13 @@
 # Canon readout references
 
+## EOS R5 Mark II: 8K RAW at 60p
+
+The `8K60` entry is 12.8 ms. [DPReview's detailed video test](https://www.dpreview.com/articles/4207856702/canon-eos-r5-ii-video-detail-levels-impress/), published 2024-08-09, explicitly measures DCI 8K RAW Lite at 59.94p as 12.8 ms, the same as 4K SRAW at 59.94p. Its [full review](https://www.dpreview.com/reviews/canon-eos-r5-mark-ii-review/), published 2024-09-12, likewise lists 8K RAW 60p at 12.8 ms; 17.3 ms belongs to 8K RAW at 24/30p.
+
+[slashCAM's test](https://www.slashcam.de/artikel/Test/Canon-EOS-R5-II---Sensor-Bildqualitaet--Rolling-Shutter-und-SRAW-unter-der-Lupe--alles-.html), published 2024-10-03, independently measures 8K RAW at 50/60p at about 13.1 ms and 24/25/30p at about 17.7 ms. The selected 12.8 ms follows DPReview, consistent with the existing SRAW60 reference.
+
+Checked 2026-11-12. The former 8K60 value of 17.3 ms was inherited from the initial database, whose history records no 60p-specific test source. This correction only changes the 8K60 entry.
+
 ## EOS R5 Mark II: 4K SRAW in CRM
 
 The additional `SRAW24`, `SRAW25`, `SRAW30`, `SRAW50`, and `SRAW60` values are mode-specific reference estimates for 4096 x 2160 SRAW. They are not camera-recorded timing metadata and are not a calibration of the local sample camera. Negative values retain the database's estimated-value convention.
